@@ -550,7 +550,7 @@ function renderMonth(){
     if(c.c&&LIMIT>0){if(tc===LIMIT)cls+=' at-limit';if(tc>LIMIT)cls+=' over-limit'}
     el.className=cls;el.dataset.date=ds;
     if(IS_ED){
-      el.onclick=e=>{if(e.target===el||e.target.closest('.cal-day-num'))openAM(ds)};
+      el.onclick=e=>{if(e.target===el||e.target.closest('.cal-day-num')){if(IS_ED)openAM(ds);else showToast('👁 Visualizadores não podem editar',true)}};
       el.ondragover=e=>{e.preventDefault();el.classList.add('drag-over')};el.ondragleave=()=>el.classList.remove('drag-over');
       el.ondrop=e=>{e.preventDefault();el.classList.remove('drag-over');if(dragId)moveA(dragId,ds)}
     }
@@ -609,7 +609,7 @@ function mkEv(a){
   b.appendChild(hc);
 
   if(IS_ED){b.draggable=true;b.ondragstart=e=>{dragId=a.id;e.stopPropagation();setTimeout(()=>b.style.opacity='.4',0)};b.ondragend=()=>{b.style.opacity='';dragId=null}}
-  b.onclick=e=>{e.stopPropagation();openAM(null,a.id)};
+  b.onclick=e=>{e.stopPropagation();if(IS_ED)openAM(null,a.id);else showToast('👁 Visualizadores não podem editar',true)};
   return b
 }
 
